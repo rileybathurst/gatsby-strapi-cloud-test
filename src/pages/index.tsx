@@ -1,5 +1,6 @@
 import * as React from "react"
-import type { HeadFC, PageProps } from "gatsby"
+// import type { HeadFC, PageProps } from "gatsby"
+import { Link, useStaticQuery, graphql } from 'gatsby';
 
 const pageStyles = {
   color: "#232129",
@@ -137,8 +138,29 @@ const links = [
 ]
 
 const IndexPage: React.FC<PageProps> = () => {
+
+  const { allStrapiPost } = useStaticQuery(graphql`
+    query IndexQuery {
+      allStrapiPost {
+        nodes {
+          id
+          title
+        }
+      }
+    }
+  `);
+
+
   return (
     <main style={pageStyles}>
+
+      {allStrapiPost.nodes.map(post => (
+        <div key={post.id}>
+          <h2>{post.title}</h2>
+        </div>
+      ))}
+
+
       <h1 style={headingStyles}>
         Congratulations
         <br />
